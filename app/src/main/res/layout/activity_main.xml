@@ -29,6 +29,8 @@
         android:layout_marginBottom="50dp">
     </View>
 
+
+
     <ImageView
         android:id="@+id/playerTopLeftSuit"
         android:layout_width="wrap_content"
@@ -47,8 +49,7 @@
         app:layout_constraintEnd_toEndOf="@id/player_card"
         app:layout_constraintTop_toTopOf="@id/player_card"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/club">
+        android:layout_marginEnd="12dp">
     </ImageView>
 
     <ImageView
@@ -58,8 +59,7 @@
         app:layout_constraintStart_toStartOf="@id/player_card"
         app:layout_constraintBottom_toBottomOf="@id/player_card"
         android:layout_marginBottom="12dp"
-        android:layout_marginStart="12dp"
-        android:src="@drawable/club">
+        android:layout_marginStart="12dp">
     </ImageView>
 
     <ImageView
@@ -69,8 +69,49 @@
         app:layout_constraintEnd_toEndOf="@id/player_card"
         app:layout_constraintBottom_toBottomOf="@id/player_card"
         android:layout_marginBottom="12dp"
-        android:layout_marginEnd="12dp"
-        android:src="@drawable/club">
+        android:layout_marginEnd="12dp">
+    </ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/opponentTopLeftSuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/opponent_card"
+        app:layout_constraintTop_toTopOf="@id/opponent_card"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="12dp">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/opponentTopRightSuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/opponent_card"
+        app:layout_constraintTop_toTopOf="@id/opponent_card"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/opponentBottomLeftSuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/opponent_card"
+        app:layout_constraintBottom_toBottomOf="@id/opponent_card"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="12dp">
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/opponentBottomRightSuit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/opponent_card"
+        app:layout_constraintBottom_toBottomOf="@id/opponent_card"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp">
     </ImageView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
