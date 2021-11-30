@@ -38,8 +38,7 @@
         app:layout_constraintStart_toStartOf="@id/player_card"
         app:layout_constraintTop_toTopOf="@id/player_card"
         android:layout_marginTop="12dp"
-        android:layout_marginStart="12dp"
-        android:src="@drawable/club">
+        android:layout_marginStart="12dp">
     </ImageView>
 
     <ImageView
