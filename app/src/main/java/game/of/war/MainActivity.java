@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView opponentBottomLeftSuit;
     ImageView opponentBottomRightSuit;
 
-    ArrayList<Integer> clubArray = new ArrayList<>();
-    ArrayList<Integer> spadeArray = new ArrayList<>();
-    ArrayList<Integer> diamondArray = new ArrayList<>();
-    ArrayList<Integer> heartArray = new ArrayList<>();;
+    ArrayList<Integer> arrayOfNumbersForClubs = new ArrayList<>();
+    ArrayList<Integer> arrayOfNumbersForSpades = new ArrayList<>();
+    ArrayList<Integer> arrayOfNumbersForDiamonds = new ArrayList<>();
+    ArrayList<Integer> arrayOfNumbersForHearts = new ArrayList<>();;
 
     ArrayList<ArrayList<Integer>> deckArray = new ArrayList<>();
 
@@ -73,66 +73,50 @@ public class MainActivity extends AppCompatActivity {
         populateDeckArray();
 
         crossedSwords.setOnClickListener(v-> {
-            int playerCardSelected = selectNumberFromSuitArray(selectSuitArray());
-            displaySuitDrawableForPlayer(selectSuitArray());
+            int playerCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
+            displaySuitDrawableForPlayer(selectArrayOfNumbersFromSuit());
 
-            int opponentCardSelected = selectNumberFromSuitArray(selectSuitArray());
-            displaySuitDrawableForOpponent(selectSuitArray());
+            int opponentCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
+            displaySuitDrawableForOpponent(selectArrayOfNumbersFromSuit());
 
             playerNumber.setText(String.valueOf(playerCardSelected));
             opponentNumber.setText(String.valueOf(opponentCardSelected));
         });
     }
 
-    public void populateSuitArrays() {
-        for (int i=0; i<13; i++) {
-            clubArray.add(i);
-            spadeArray.add(i);
-            diamondArray.add(i);
-            heartArray.add(i);
-        }
-    }
-
-    public void populateDeckArray() {
-        deckArray.add(clubArray);
-        deckArray.add(spadeArray);
-        deckArray.add(diamondArray);
-        deckArray.add(heartArray);
-    }
-
-    public ArrayList<Integer> selectSuitArray() {
+    public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
         int selected = random.nextInt(4-1 + 1);
         ArrayList<Integer> result = new ArrayList<>();
 
-        if (selected==CLUBS && clubArray.size()>0) result = clubArray;
-        if (selected==SPADES && spadeArray.size()>0) result = spadeArray;
-        if (selected==DIAMONDS && diamondArray.size()>0) result = diamondArray;
-        if (selected==HEARTS && heartArray.size()>0) result = heartArray;
+        if (selected==CLUBS && arrayOfNumbersForClubs.size()>0) result = arrayOfNumbersForClubs;
+        if (selected==SPADES && arrayOfNumbersForSpades.size()>0) result = arrayOfNumbersForSpades;
+        if (selected==DIAMONDS && arrayOfNumbersForDiamonds.size()>0) result = arrayOfNumbersForDiamonds;
+        if (selected==HEARTS && arrayOfNumbersForHearts.size()>0) result = arrayOfNumbersForHearts;
 
         return result;
     }
 
-    public int selectNumberFromSuitArray(ArrayList<Integer> suitArray) {
-        if (suitArray.size()>0) {
-            int numberIndex = random.nextInt(suitArray.size()-1);
-            return suitArray.get(numberIndex);
+    public int selectCardNumberFromArray(ArrayList<Integer> numberArray) {
+        if (numberArray.size()>0) {
+            int numberIndex = random.nextInt(numberArray.size()-1);
+            return numberArray.get(numberIndex);
         } else {
             return 0;
         }
     }
 
     public void displaySuitDrawableForPlayer(ArrayList<Integer> selectedSuitArray) {
-        if (selectedSuitArray==clubArray) setPlayerDeckSuitImages(R.drawable.club);
-        if (selectedSuitArray==spadeArray) setPlayerDeckSuitImages(R.drawable.spade);
-        if (selectedSuitArray==diamondArray) setPlayerDeckSuitImages(R.drawable.diamond);
-        if (selectedSuitArray==heartArray) setPlayerDeckSuitImages(R.drawable.heart);
+        if (selectedSuitArray==arrayOfNumbersForClubs) setPlayerDeckSuitImages(R.drawable.club);
+        if (selectedSuitArray==arrayOfNumbersForSpades) setPlayerDeckSuitImages(R.drawable.spade);
+        if (selectedSuitArray==arrayOfNumbersForDiamonds) setPlayerDeckSuitImages(R.drawable.diamond);
+        if (selectedSuitArray==arrayOfNumbersForHearts) setPlayerDeckSuitImages(R.drawable.heart);
     }
 
     public void displaySuitDrawableForOpponent(ArrayList<Integer> selectedSuitArray) {
-        if (selectedSuitArray==clubArray) setOpponentDeckSuitImages(R.drawable.club);
-        if (selectedSuitArray==spadeArray) setOpponentDeckSuitImages(R.drawable.spade);
-        if (selectedSuitArray==diamondArray) setOpponentDeckSuitImages(R.drawable.diamond);
-        if (selectedSuitArray==heartArray) setOpponentDeckSuitImages(R.drawable.heart);
+        if (selectedSuitArray==arrayOfNumbersForClubs) setOpponentDeckSuitImages(R.drawable.club);
+        if (selectedSuitArray==arrayOfNumbersForSpades) setOpponentDeckSuitImages(R.drawable.spade);
+        if (selectedSuitArray==arrayOfNumbersForDiamonds) setOpponentDeckSuitImages(R.drawable.diamond);
+        if (selectedSuitArray==arrayOfNumbersForHearts) setOpponentDeckSuitImages(R.drawable.heart);
     }
 
 
@@ -148,5 +132,21 @@ public class MainActivity extends AppCompatActivity {
         opponentTopRightSuit.setBackgroundResource(suitDrawable);
         opponentBottomLeftSuit.setBackgroundResource(suitDrawable);
         opponentBottomRightSuit.setBackgroundResource(suitDrawable);
+    }
+
+    public void populateSuitArrays() {
+        for (int i=0; i<13; i++) {
+            arrayOfNumbersForClubs.add(i);
+            arrayOfNumbersForSpades.add(i);
+            arrayOfNumbersForDiamonds.add(i);
+            arrayOfNumbersForHearts.add(i);
+        }
+    }
+
+    public void populateDeckArray() {
+        deckArray.add(arrayOfNumbersForClubs);
+        deckArray.add(arrayOfNumbersForSpades);
+        deckArray.add(arrayOfNumbersForDiamonds);
+        deckArray.add(arrayOfNumbersForHearts);
     }
 }
