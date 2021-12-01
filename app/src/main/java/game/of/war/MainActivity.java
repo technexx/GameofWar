@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
-        int selected = random.nextInt(4-1 + 1);
+        int selected = random.nextInt(4-1) + 1;
         ArrayList<Integer> result = new ArrayList<>();
 
         if (selected==CLUBS && arrayOfNumbersForClubs.size()>0) result = arrayOfNumbersForClubs;
@@ -97,8 +97,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int selectCardNumberFromArray(ArrayList<Integer> numberArray) {
+        int numberIndex = random.nextInt(numberArray.size()-1);
+
+        Log.i("testNum", "array is " + numberArray);
+        Log.i("testNum", "number chosen is " + numberIndex);
         if (numberArray.size()>0) {
-            int numberIndex = random.nextInt(numberArray.size()-1);
             return numberArray.get(numberIndex);
         } else {
             return 0;
