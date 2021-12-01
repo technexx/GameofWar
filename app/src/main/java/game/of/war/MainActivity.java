@@ -37,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> arrayOfNumbersForDiamonds = new ArrayList<>();
     ArrayList<Integer> arrayOfNumbersForHearts = new ArrayList<>();;
 
-    ArrayList<ArrayList<Integer>> deckArray = new ArrayList<>();
-
     Random random = new Random();
 
     final int CLUBS = 1;
@@ -70,11 +68,15 @@ public class MainActivity extends AppCompatActivity {
         opponentBottomRightSuit = findViewById(R.id.opponentBottomRightSuit);
 
         populateSuitArrays();
-        populateDeckArray();
 
         crossedSwords.setOnClickListener(v-> {
-            ArrayList<Integer> chosenSuitArrayForPlayer = new ArrayList<>(selectArrayOfNumbersFromSuit());
-            ArrayList<Integer> chosenSuitArrayForOpponent = new ArrayList<>(selectArrayOfNumbersFromSuit());
+            //Todo: This is not referencing the actual global array we're using, but simply creating a new one identical to it, thus we're not actually removing it.
+            //Todo: Removing indices won't work for values because list will not correspond after deletions.
+            ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
+            ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+
+            Log.i("testnum", "chosen player array is " + chosenSuitArrayForPlayer);
+            Log.i("testnum", "chose opponent array is " + chosenSuitArrayForOpponent);
 
             int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
             displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
@@ -83,11 +85,19 @@ public class MainActivity extends AppCompatActivity {
             int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
             displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
             opponentNumber.setText(convertCardValueToString(opponentCardSelected));
+
+            removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
+            removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
+
+            Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
+            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
+            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds);
+            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts);
         });
     }
 
-    public void removeCardFromDeck(ArrayList<Integer> cardArraySelected) {
-
+    public void removeCardFromDeck(ArrayList<Integer> cardArraySelected, int cardSelected) {
+        cardArraySelected.remove((Object) cardSelected);
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
@@ -158,12 +168,5 @@ public class MainActivity extends AppCompatActivity {
             arrayOfNumbersForDiamonds.add(i);
             arrayOfNumbersForHearts.add(i);
         }
-    }
-
-    public void populateDeckArray() {
-        deckArray.add(arrayOfNumbersForClubs);
-        deckArray.add(arrayOfNumbersForSpades);
-        deckArray.add(arrayOfNumbersForDiamonds);
-        deckArray.add(arrayOfNumbersForHearts);
     }
 }
