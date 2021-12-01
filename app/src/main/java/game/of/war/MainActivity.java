@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity {
         populateDeckArray();
 
         crossedSwords.setOnClickListener(v-> {
-            int playerCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
             displaySuitDrawableForPlayer(selectArrayOfNumbersFromSuit());
-
-            int opponentCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
             displaySuitDrawableForOpponent(selectArrayOfNumbersFromSuit());
 
-            playerNumber.setText(String.valueOf(playerCardSelected));
-            opponentNumber.setText(String.valueOf(opponentCardSelected));
+            int playerCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
+            int opponentCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
+
+            playerNumber.setText(convertCardValueToString(playerCardSelected));
+            opponentNumber.setText(convertCardValueToString(opponentCardSelected));
         });
     }
 
@@ -97,11 +97,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public int selectCardNumberFromArray(ArrayList<Integer> numberArray) {
-        int numberIndex = random.nextInt(numberArray.size()-1);
-
-        Log.i("testNum", "array is " + numberArray);
-        Log.i("testNum", "number chosen is " + numberIndex);
         if (numberArray.size()>0) {
+            int numberIndex = random.nextInt(numberArray.size());
             return numberArray.get(numberIndex);
         } else {
             return 0;
@@ -137,8 +134,19 @@ public class MainActivity extends AppCompatActivity {
         opponentBottomRightSuit.setBackgroundResource(suitDrawable);
     }
 
+    public String convertCardValueToString(int value) {
+        if (value<=10) {
+            return String.valueOf(value);
+        }
+        else if (value==11) return "J";
+        else if (value==12) return "Q";
+        else if (value==13) return "K";
+        else if (value==14) return "A";
+        else return "0";
+    }
+
     public void populateSuitArrays() {
-        for (int i=0; i<13; i++) {
+        for (int i=1; i<15; i++) {
             arrayOfNumbersForClubs.add(i);
             arrayOfNumbersForSpades.add(i);
             arrayOfNumbersForDiamonds.add(i);
