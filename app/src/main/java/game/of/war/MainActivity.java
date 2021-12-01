@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -13,8 +14,13 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    View player_card;
-    View opponent_card;
+    ImageView crossedSwords;
+
+    View playerCard;
+    View opponentCard;
+
+    TextView playerNumber;
+    TextView opponentNumber;
 
     ImageView playerTopLeftSuit;
     ImageView playerTopRightSuit;
@@ -33,18 +39,25 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<ArrayList<Integer>> deckArray = new ArrayList<>();
 
-    int CLUBS = 1;
-    int SPADES = 2;
-    int DIAMONDS = 3;
-    int HEARTS = 4;
+    Random random = new Random();
+
+    final int CLUBS = 1;
+    final int SPADES = 2;
+    final int DIAMONDS = 3;
+    final int HEARTS = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        player_card = findViewById(R.id.player_card);
-        opponent_card = findViewById(R.id.opponent_card);
+        crossedSwords = findViewById(R.id.crossed_swords);
+
+        playerCard = findViewById(R.id.playerCard);
+        opponentCard = findViewById(R.id.opponentCard);
+
+        playerNumber = findViewById(R.id.playerNumber);
+        opponentNumber = findViewById(R.id.opponentNumber);
 
         playerTopLeftSuit = findViewById(R.id.playerTopLeftSuit);
         playerTopRightSuit = findViewById(R.id.playerTopRightSuit);
@@ -59,19 +72,15 @@ public class MainActivity extends AppCompatActivity {
         populateSuitArrays();
         populateDeckArray();
 
-        player_card.setOnClickListener(v-> {
-            Random random = new Random();
-            int selected = random.nextInt(4-1 + 1);
-            switch (selected) {
-                case 1:
-                    setPlayerDeckSuitImages(R.drawable.club); break;
-                case 2:
-                    setPlayerDeckSuitImages(R.drawable.spade); break;
-                case 3:
-                    setPlayerDeckSuitImages(R.drawable.diamond); break;
-                case 4:
-                    setPlayerDeckSuitImages(R.drawable.heart); break;
-            }
+        crossedSwords.setOnClickListener(v-> {
+            int playerCardSelected = selectNumberFromSuitArray(selectSuitArray());
+            displaySuitDrawableForPlayer(selectSuitArray());
+
+            int opponentCardSelected = selectNumberFromSuitArray(selectSuitArray());
+            displaySuitDrawableForOpponent(selectSuitArray());
+
+            playerNumber.setText(String.valueOf(playerCardSelected));
+            opponentNumber.setText(String.valueOf(opponentCardSelected));
         });
     }
 
@@ -91,6 +100,42 @@ public class MainActivity extends AppCompatActivity {
         deckArray.add(heartArray);
     }
 
+    public ArrayList<Integer> selectSuitArray() {
+        int selected = random.nextInt(4-1 + 1);
+        ArrayList<Integer> result = new ArrayList<>();
+
+        if (selected==CLUBS && clubArray.size()>0) result = clubArray;
+        if (selected==SPADES && spadeArray.size()>0) result = spadeArray;
+        if (selected==DIAMONDS && diamondArray.size()>0) result = diamondArray;
+        if (selected==HEARTS && heartArray.size()>0) result = heartArray;
+
+        return result;
+    }
+
+    public int selectNumberFromSuitArray(ArrayList<Integer> suitArray) {
+        if (suitArray.size()>0) {
+            int numberIndex = random.nextInt(suitArray.size()-1);
+            return suitArray.get(numberIndex);
+        } else {
+            return 0;
+        }
+    }
+
+    public void displaySuitDrawableForPlayer(ArrayList<Integer> selectedSuitArray) {
+        if (selectedSuitArray==clubArray) setPlayerDeckSuitImages(R.drawable.club);
+        if (selectedSuitArray==spadeArray) setPlayerDeckSuitImages(R.drawable.spade);
+        if (selectedSuitArray==diamondArray) setPlayerDeckSuitImages(R.drawable.diamond);
+        if (selectedSuitArray==heartArray) setPlayerDeckSuitImages(R.drawable.heart);
+    }
+
+    public void displaySuitDrawableForOpponent(ArrayList<Integer> selectedSuitArray) {
+        if (selectedSuitArray==clubArray) setOpponentDeckSuitImages(R.drawable.club);
+        if (selectedSuitArray==spadeArray) setOpponentDeckSuitImages(R.drawable.spade);
+        if (selectedSuitArray==diamondArray) setOpponentDeckSuitImages(R.drawable.diamond);
+        if (selectedSuitArray==heartArray) setOpponentDeckSuitImages(R.drawable.heart);
+    }
+
+
     public void setPlayerDeckSuitImages(int suitDrawable) {
         playerTopLeftSuit.setBackgroundResource(suitDrawable);
         playerTopRightSuit.setBackgroundResource(suitDrawable);
@@ -98,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         playerBottomRightSuit.setBackgroundResource(suitDrawable);
     }
 
-    public void setOpponentDeckSuitImages(int suitDrawable) {
+    public void setOpponentDeckSuitImages(int suitDrawable){
         opponentTopLeftSuit.setBackgroundResource(suitDrawable);
         opponentTopRightSuit.setBackgroundResource(suitDrawable);
         opponentBottomLeftSuit.setBackgroundResource(suitDrawable);

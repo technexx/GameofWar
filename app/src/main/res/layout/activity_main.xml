@@ -7,8 +7,19 @@
     tools:context=".MainActivity"
     android:background="@color/black">
 
+    <ImageView
+        android:id="@+id/crossed_swords"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24sp"
+        android:src="@drawable/crossed_swords">
+    </ImageView>
+
     <View
-        android:id="@+id/player_card"
+        android:id="@+id/playerCard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="120dp"
@@ -19,7 +30,7 @@
     </View>
 
     <View
-        android:id="@+id/opponent_card"
+        android:id="@+id/opponentCard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="120dp"
@@ -30,13 +41,36 @@
     </View>
 
 
+    <TextView
+        android:id="@+id/playerNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        app:layout_constraintTop_toTopOf="@id/playerCard"
+        app:layout_constraintBottom_toBottomOf="@id/playerCard"
+        android:textColor="@color/white"
+        android:textSize="60sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/opponentNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        app:layout_constraintTop_toTopOf="@id/opponentCard"
+        app:layout_constraintBottom_toBottomOf="@id/opponentCard"
+        android:textColor="@color/white"
+        android:textSize="60sp">
+    </TextView>
 
     <ImageView
         android:id="@+id/playerTopLeftSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/player_card"
-        app:layout_constraintTop_toTopOf="@id/player_card"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintTop_toTopOf="@id/playerCard"
         android:layout_marginTop="12dp"
         android:layout_marginStart="12dp">
     </ImageView>
@@ -45,8 +79,8 @@
         android:id="@+id/playerTopRightSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/player_card"
-        app:layout_constraintTop_toTopOf="@id/player_card"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        app:layout_constraintTop_toTopOf="@id/playerCard"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp">
     </ImageView>
@@ -55,8 +89,8 @@
         android:id="@+id/playerBottomLeftSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/player_card"
-        app:layout_constraintBottom_toBottomOf="@id/player_card"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintBottom_toBottomOf="@id/playerCard"
         android:layout_marginBottom="12dp"
         android:layout_marginStart="12dp">
     </ImageView>
@@ -65,8 +99,8 @@
         android:id="@+id/playerBottomRightSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/player_card"
-        app:layout_constraintBottom_toBottomOf="@id/player_card"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        app:layout_constraintBottom_toBottomOf="@id/playerCard"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="12dp">
     </ImageView>
@@ -77,8 +111,8 @@
         android:id="@+id/opponentTopLeftSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/opponent_card"
-        app:layout_constraintTop_toTopOf="@id/opponent_card"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintTop_toTopOf="@id/opponentCard"
         android:layout_marginTop="12dp"
         android:layout_marginStart="12dp">
     </ImageView>
@@ -87,8 +121,8 @@
         android:id="@+id/opponentTopRightSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/opponent_card"
-        app:layout_constraintTop_toTopOf="@id/opponent_card"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        app:layout_constraintTop_toTopOf="@id/opponentCard"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="12dp">
     </ImageView>
@@ -97,8 +131,8 @@
         android:id="@+id/opponentBottomLeftSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/opponent_card"
-        app:layout_constraintBottom_toBottomOf="@id/opponent_card"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintBottom_toBottomOf="@id/opponentCard"
         android:layout_marginBottom="12dp"
         android:layout_marginStart="12dp">
     </ImageView>
@@ -107,8 +141,8 @@
         android:id="@+id/opponentBottomRightSuit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/opponent_card"
-        app:layout_constraintBottom_toBottomOf="@id/opponent_card"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        app:layout_constraintBottom_toBottomOf="@id/opponentCard"
         android:layout_marginBottom="12dp"
         android:layout_marginEnd="12dp">
     </ImageView>
