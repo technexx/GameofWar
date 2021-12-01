@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
-        int selected = random.nextInt(4-1) + 1;
+        int selected = random.nextInt(5-1) + 1;
         ArrayList<Integer> result = new ArrayList<>();
 
         if (selected==CLUBS && arrayOfNumbersForClubs.size()>0) result = arrayOfNumbersForClubs;
