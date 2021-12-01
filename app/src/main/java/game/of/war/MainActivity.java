@@ -73,15 +73,21 @@ public class MainActivity extends AppCompatActivity {
         populateDeckArray();
 
         crossedSwords.setOnClickListener(v-> {
-            displaySuitDrawableForPlayer(selectArrayOfNumbersFromSuit());
-            displaySuitDrawableForOpponent(selectArrayOfNumbersFromSuit());
+            ArrayList<Integer> chosenSuitArrayForPlayer = new ArrayList<>(selectArrayOfNumbersFromSuit());
+            ArrayList<Integer> chosenSuitArrayForOpponent = new ArrayList<>(selectArrayOfNumbersFromSuit());
 
-            int playerCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
-            int opponentCardSelected = selectCardNumberFromArray(selectArrayOfNumbersFromSuit());
-
+            int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
+            displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
             playerNumber.setText(convertCardValueToString(playerCardSelected));
+
+            int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
+            displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
             opponentNumber.setText(convertCardValueToString(opponentCardSelected));
         });
+    }
+
+    public void removeCardFromDeck(ArrayList<Integer> cardArraySelected) {
+
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
