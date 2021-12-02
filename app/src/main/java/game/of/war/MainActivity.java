@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     TextView opponentScore;
     TextView playerWinText;
     TextView opponentWinText;
+    TextView drawRoundText;
 
     ImageView playerTopLeftSuit;
     ImageView playerTopRightSuit;
@@ -58,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         crossedSwords = findViewById(R.id.crossed_swords);
+        drawRoundText = findViewById(R.id.draw_round_text);
 
         playerCard = findViewById(R.id.playerCard);
         playerNumber = findViewById(R.id.playerNumber);
@@ -107,9 +109,24 @@ public class MainActivity extends AppCompatActivity {
             removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
 
             int drawResult = flipResult(playerCardSelected, opponentCardSelected);
-
-
+            setCardRoundResultText(drawResult);
         });
+    }
+
+    public void setCardRoundResultText(int winner) {
+        if (winner==PLAYER_CARD_WINS) {
+            playerWinText.setText("Win!");
+            opponentWinText.setText("");
+            drawRoundText.setText("");
+        } else if (winner==OPPONENT_CARD_WINS) {
+            playerWinText.setText("");
+            opponentWinText.setText("WIN!");
+            drawRoundText.setText("");
+        } else {
+            playerWinText.setText("");
+            opponentWinText.setText("");
+            drawRoundText.setText("DRAW!");
+        }
     }
 
     public void removeCardFromDeck(ArrayList<Integer> cardArraySelected, int cardSelected) {

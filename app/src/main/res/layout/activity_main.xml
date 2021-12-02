@@ -113,6 +113,18 @@
         android:textColor="@color/white">
     </TextView>
 
+    <TextView
+        android:id="@+id/draw_round_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/playerCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
 
     <ImageView
         android:id="@+id/playerTopLeftSuit"
