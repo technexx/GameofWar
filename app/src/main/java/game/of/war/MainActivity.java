@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView playerNumber;
     TextView opponentNumber;
-    TextView playerScore;
-    TextView opponentScore;
+    TextView playerScoreText;
+    TextView opponentScoreText;
     TextView playerWinText;
     TextView opponentWinText;
     TextView drawRoundText;
@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     final int OPPONENT_CARD_WINS =2;
     final int CARDS_DRAW = 3;
 
+    int totalPlayerScore;
+    int totalOpponentScore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         playerCard = findViewById(R.id.playerCard);
         playerNumber = findViewById(R.id.playerNumber);
-        playerScore = findViewById(R.id.player_score_text);
+        playerScoreText = findViewById(R.id.player_score_text);
         playerWinText = findViewById(R.id.player_win_round_text);
         playerTopLeftSuit = findViewById(R.id.playerTopLeftSuit);
         playerTopRightSuit = findViewById(R.id.playerTopRightSuit);
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         opponentWinText = findViewById(R.id.opponent_win_round_text);
         opponentCard = findViewById(R.id.opponentCard);
         opponentNumber = findViewById(R.id.opponentNumber);
-        opponentScore = findViewById(R.id.opponent_score_text);
+        opponentScoreText = findViewById(R.id.opponent_score_text);
         opponentTopLeftSuit = findViewById(R.id.opponentTopLeftSuit);
         opponentTopRightSuit = findViewById(R.id.opponentTopRightSuit);
         opponentBottomLeftSuit = findViewById(R.id.opponentBottomLeftSuit);
@@ -110,7 +113,19 @@ public class MainActivity extends AppCompatActivity {
 
             int drawResult = flipResult(playerCardSelected, opponentCardSelected);
             setCardRoundResultText(drawResult);
+            setGameScore(drawResult);
         });
+    }
+
+    public void setGameScore(int winner) {
+        if (winner==PLAYER_CARD_WINS) {
+            totalPlayerScore++;
+            playerScoreText.setText(String.valueOf(totalPlayerScore));
+        }
+        else if (winner==OPPONENT_CARD_WINS) {
+            totalOpponentScore++;
+            opponentScoreText.setText(String.valueOf(totalOpponentScore));
+        }
     }
 
     public void setCardRoundResultText(int winner) {
