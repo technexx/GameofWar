@@ -69,25 +69,40 @@ public class MainActivity extends AppCompatActivity {
 
         populateSuitArrays();
 
+        //Todo: Can't have same cards drawn for both players.
         crossedSwords.setOnClickListener(v-> {
-            //Todo: This is not referencing the actual global array we're using, but simply creating a new one identical to it, thus we're not actually removing it.
-            //Todo: Removing indices won't work for values because list will not correspond after deletions.
-            ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
-            ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+            if (selectArrayOfNumbersFromSuit()==null) {
+                Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            Log.i("testnum", "chosen player array is " + chosenSuitArrayForPlayer);
-            Log.i("testnum", "chose opponent array is " + chosenSuitArrayForOpponent);
+
+            ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
+
+            while (chosenSuitArrayForPlayer.size()==0) {
+                chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
+                Log.i("testnum", "looping player!");
+            }
 
             int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
             displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
             playerNumber.setText(convertCardValueToString(playerCardSelected));
+            removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
+
+
+
+            ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+
+            while (chosenSuitArrayForOpponent.size()==0) {
+                chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+                Log.i("testnum", "looping opponent!");
+            }
 
             int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
             displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
             opponentNumber.setText(convertCardValueToString(opponentCardSelected));
-
-            removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
             removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
+
 
             Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
             Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
@@ -101,13 +116,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
+        if (arrayOfNumbersForClubs.size()==0 && arrayOfNumbersForSpades.size()==0 && arrayOfNumbersForDiamonds.size()==0 && arrayOfNumbersForHearts.size()==0) {
+            return null;
+        }
+
         int selected = random.nextInt(5-1) + 1;
         ArrayList<Integer> result = new ArrayList<>();
 
-        if (selected==CLUBS && arrayOfNumbersForClubs.size()>0) result = arrayOfNumbersForClubs;
-        if (selected==SPADES && arrayOfNumbersForSpades.size()>0) result = arrayOfNumbersForSpades;
-        if (selected==DIAMONDS && arrayOfNumbersForDiamonds.size()>0) result = arrayOfNumbersForDiamonds;
-        if (selected==HEARTS && arrayOfNumbersForHearts.size()>0) result = arrayOfNumbersForHearts;
+        if (selected==CLUBS) {
+            result = arrayOfNumbersForClubs;
+        }
+        else if (selected==SPADES) {
+            result = arrayOfNumbersForSpades;
+        }
+        else if (selected==DIAMONDS) {
+            result = arrayOfNumbersForDiamonds;
+        }
+        else if (selected==HEARTS) {
+            result = arrayOfNumbersForHearts;
+        }
+
+        //Todo: This doesn't negate final return result.
+//        while (result.size()==0) {
+//            Log.i("testnum", "array is " + result);
+//            selectArrayOfNumbersFromSuit();
+//        }
 
         return result;
     }
