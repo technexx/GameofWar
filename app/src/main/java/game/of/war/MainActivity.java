@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    Random random = new Random();
+
     ImageView crossedSwords;
 
     View playerCard;
@@ -21,6 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
     TextView playerNumber;
     TextView opponentNumber;
+    TextView playerScore;
+    TextView opponentScore;
+    TextView playerWinText;
+    TextView opponentWinText;
 
     ImageView playerTopLeftSuit;
     ImageView playerTopRightSuit;
@@ -37,12 +43,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> arrayOfNumbersForDiamonds = new ArrayList<>();
     ArrayList<Integer> arrayOfNumbersForHearts = new ArrayList<>();;
 
-    Random random = new Random();
-
     final int CLUBS = 1;
     final int SPADES = 2;
     final int DIAMONDS = 3;
     final int HEARTS = 4;
+
+    final int PLAYER_CARD_WINS = 1;
+    final int OPPONENT_CARD_WINS =2;
+    final int CARDS_DRAW = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +60,18 @@ public class MainActivity extends AppCompatActivity {
         crossedSwords = findViewById(R.id.crossed_swords);
 
         playerCard = findViewById(R.id.playerCard);
-        opponentCard = findViewById(R.id.opponentCard);
-
         playerNumber = findViewById(R.id.playerNumber);
-        opponentNumber = findViewById(R.id.opponentNumber);
-
+        playerScore = findViewById(R.id.player_score_text);
+        playerWinText = findViewById(R.id.player_win_round_text);
         playerTopLeftSuit = findViewById(R.id.playerTopLeftSuit);
         playerTopRightSuit = findViewById(R.id.playerTopRightSuit);
         playerBottomLeftSuit = findViewById(R.id.playerBottomLeftSuit);
         playerBottomRightSuit = findViewById(R.id.playerBottomRightSuit);
 
+        opponentWinText = findViewById(R.id.opponent_win_round_text);
+        opponentCard = findViewById(R.id.opponentCard);
+        opponentNumber = findViewById(R.id.opponentNumber);
+        opponentScore = findViewById(R.id.opponent_score_text);
         opponentTopLeftSuit = findViewById(R.id.opponentTopLeftSuit);
         opponentTopRightSuit = findViewById(R.id.opponentTopRightSuit);
         opponentBottomLeftSuit = findViewById(R.id.opponentBottomLeftSuit);
@@ -69,19 +79,16 @@ public class MainActivity extends AppCompatActivity {
 
         populateSuitArrays();
 
-        //Todo: Can't have same cards drawn for both players.
+        //Todo: Consolidate onClick stuff in separate method.
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
                 Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-
             ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
-
             while (chosenSuitArrayForPlayer.size()==0) {
                 chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
-                Log.i("testnum", "looping player!");
             }
 
             int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
@@ -89,13 +96,9 @@ public class MainActivity extends AppCompatActivity {
             playerNumber.setText(convertCardValueToString(playerCardSelected));
             removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
 
-
-
             ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
-
             while (chosenSuitArrayForOpponent.size()==0) {
                 chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
-                Log.i("testnum", "looping opponent!");
             }
 
             int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
@@ -103,11 +106,9 @@ public class MainActivity extends AppCompatActivity {
             opponentNumber.setText(convertCardValueToString(opponentCardSelected));
             removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
 
+            int drawResult = flipResult(playerCardSelected, opponentCardSelected);
 
-            Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
-            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
-            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds);
-            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts);
+
         });
     }
 
@@ -136,12 +137,6 @@ public class MainActivity extends AppCompatActivity {
             result = arrayOfNumbersForHearts;
         }
 
-        //Todo: This doesn't negate final return result.
-//        while (result.size()==0) {
-//            Log.i("testnum", "array is " + result);
-//            selectArrayOfNumbersFromSuit();
-//        }
-
         return result;
     }
 
@@ -152,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return 0;
         }
+    }
+
+    public int flipResult(int playerCard, int opponentCard) {
+        if (playerCard > opponentCard) return PLAYER_CARD_WINS;
+        else if (opponentCard > playerCard) return OPPONENT_CARD_WINS;
+        else return CARDS_DRAW;
     }
 
     public void displaySuitDrawableForPlayer(ArrayList<Integer> selectedSuitArray) {
@@ -203,3 +204,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+//            Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
+//            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
+//            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds);
+//            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts);

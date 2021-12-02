@@ -65,6 +65,55 @@
         android:textSize="60sp">
     </TextView>
 
+    <TextView
+        android:id="@+id/player_win_round_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        app:layout_constraintTop_toBottomOf="@id/playerCard"
+        android:layout_marginTop="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <TextView
+        android:id="@+id/opponent_win_round_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        app:layout_constraintTop_toBottomOf="@id/opponentCard"
+        android:layout_marginTop="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <TextView
+        android:id="@+id/player_score_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        app:layout_constraintBottom_toTopOf="@id/playerCard"
+        android:layout_marginBottom="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <TextView
+        android:id="@+id/opponent_score_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        app:layout_constraintBottom_toTopOf="@id/opponentCard"
+        android:layout_marginBottom="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
+
     <ImageView
         android:id="@+id/playerTopLeftSuit"
         android:layout_width="wrap_content"
