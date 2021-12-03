@@ -1,7 +1,11 @@
 package game.of.war;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     int totalCardsLeft = 52;
     int totalPlayerScore;
     int totalOpponentScore;
+    boolean gameHasBegun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         opponentBottomRightSuit = findViewById(R.id.opponentBottomRightSuit);
 
         populateSuitArrays();
-        resetAndPopulateTextViews();
+        resetGameViewsAndVars();
 
         //Todo: Consolidate onClick stuff in separate method.
         //Todo: 27 total game score instead of 26 (should be even less than 26 due to ties, at the moment).
@@ -119,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
             int drawResult = flipResult(playerCardSelected, opponentCardSelected);
             setCardRoundResultText(drawResult);
             setGameScore(drawResult);
+
+            removeCardBackGrounds();
         });
     }
 
@@ -243,7 +250,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void resetAndPopulateTextViews() {
+    public void removeCardBackGrounds() {
+        if (!gameHasBegun) {
+            playerCard.setBackgroundResource(R.drawable.card_border);
+            opponentCard.setBackgroundResource(R.drawable.card_border);
+            gameHasBegun = true;
+        }
+    }
+
+    public void resetGameViewsAndVars() {
+        gameHasBegun = false;
         playerScoreText.setText("0");
         opponentScoreText.setText("0");
         totalCardsLeftTextView.setText("52");
