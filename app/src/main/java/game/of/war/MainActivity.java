@@ -18,14 +18,15 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView crossedSwords;
 
+    TextView totalCardsLeftTextView;
     View playerCard;
     View opponentCard;
 
     TextView playerNumber;
-    TextView opponentNumber;
     TextView playerScoreText;
-    TextView opponentScoreText;
     TextView playerWinText;
+    TextView opponentNumber;
+    TextView opponentScoreText;
     TextView opponentWinText;
     TextView drawRoundText;
 
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     final int OPPONENT_CARD_WINS =2;
     final int CARDS_DRAW = 3;
 
+    int totalCardsLeft = 52;
     int totalPlayerScore;
     int totalOpponentScore;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         crossedSwords = findViewById(R.id.crossed_swords);
         drawRoundText = findViewById(R.id.draw_round_text);
+        totalCardsLeftTextView = findViewById(R.id.total_cards_left_textView);
 
         playerCard = findViewById(R.id.playerCard);
         playerNumber = findViewById(R.id.playerNumber);
@@ -83,8 +86,10 @@ public class MainActivity extends AppCompatActivity {
         opponentBottomRightSuit = findViewById(R.id.opponentBottomRightSuit);
 
         populateSuitArrays();
+        resetAndPopulateTextViews();
 
         //Todo: Consolidate onClick stuff in separate method.
+        //Todo: 27 total game score instead of 26 (should be even less than 26 due to ties, at the moment).
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
                 Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
@@ -126,6 +131,8 @@ public class MainActivity extends AppCompatActivity {
             totalOpponentScore++;
             opponentScoreText.setText(String.valueOf(totalOpponentScore));
         }
+        totalCardsLeft -= 2;
+        totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
     }
 
     public void setCardRoundResultText(int winner) {
@@ -234,6 +241,14 @@ public class MainActivity extends AppCompatActivity {
             arrayOfNumbersForDiamonds.add(i);
             arrayOfNumbersForHearts.add(i);
         }
+    }
+
+    public void resetAndPopulateTextViews() {
+        playerScoreText.setText("0");
+        opponentScoreText.setText("0");
+        totalCardsLeftTextView.setText("52");
+        playerCard.setBackgroundResource(R.drawable.card_logo);
+        opponentCard.setBackgroundResource(R.drawable.card_logo);
     }
 }
 
