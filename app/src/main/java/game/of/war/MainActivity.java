@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
         opponentBottomLeftSuit = findViewById(R.id.opponentBottomLeftSuit);
         opponentBottomRightSuit = findViewById(R.id.opponentBottomRightSuit);
 
+        resetGameViewsAndVars();
         populateSuitArrays();
 
         crossedSwords.setOnClickListener(v-> {
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         resetGame.setOnClickListener(v-> {
+            populateSuitArrays();
             resetGameViewsAndVars();
         });
     }
@@ -284,8 +286,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void resetGameViewsAndVars() {
-        populateSuitArrays();
-
         gameHasBegun = false;
         playerScoreText.setText("0");
         opponentScoreText.setText("0");
