@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         populateSuitArrays();
         resetGameViewsAndVars();
 
-        //Todo: Consolidate onClick stuff in separate method.
         //Todo: 27 total game score instead of 26 (should be even less than 26 due to ties, at the moment).
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
@@ -102,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
             }
 
             selectAndCompareAndDisplayResultsOfCardRound();
+
+            Log.i("testnum", "club array is " + arrayOfNumbersForClubs.size());
+            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades.size());
+            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds.size());
+            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts.size());
 
         });
     }
@@ -248,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void populateSuitArrays() {
-        for (int i=1; i<15; i++) {
+        for (int i=2; i<15; i++) {
             arrayOfNumbersForClubs.add(i);
             arrayOfNumbersForSpades.add(i);
             arrayOfNumbersForDiamonds.add(i);
