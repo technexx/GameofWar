@@ -101,32 +101,38 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
-            while (chosenSuitArrayForPlayer.size()==0) {
-                chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
-            }
+            selectAndCompareAndDisplayResultsOfCardRound();
 
-            int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
-            displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
-            playerNumber.setText(convertCardValueToString(playerCardSelected));
-            removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
-
-            ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
-            while (chosenSuitArrayForOpponent.size()==0) {
-                chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
-            }
-
-            int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
-            displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
-            opponentNumber.setText(convertCardValueToString(opponentCardSelected));
-            removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
-
-            int drawResult = flipResult(playerCardSelected, opponentCardSelected);
-            setCardRoundResultText(drawResult);
-            setGameScore(drawResult);
-
-            removeCardBackGrounds();
         });
+    }
+
+    public void selectAndCompareAndDisplayResultsOfCardRound() {
+
+        ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
+        while (chosenSuitArrayForPlayer.size()==0) {
+            chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
+        }
+
+        int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
+        displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
+        playerNumber.setText(convertCardValueToString(playerCardSelected));
+        removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
+
+        ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+        while (chosenSuitArrayForOpponent.size()==0) {
+            chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
+        }
+
+        int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
+        displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
+        opponentNumber.setText(convertCardValueToString(opponentCardSelected));
+        removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
+
+        int drawResult = flipResult(playerCardSelected, opponentCardSelected);
+        setCardRoundResultText(drawResult);
+        setGameScore(drawResult);
+
+        removeCardBackGrounds();
     }
 
     public void setGameScore(int winner) {
