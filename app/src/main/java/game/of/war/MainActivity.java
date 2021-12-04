@@ -96,13 +96,9 @@ public class MainActivity extends AppCompatActivity {
         //Todo: 27 total game score instead of 26 (should be even less than 26 due to ties, at the moment).
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
-                declareWinnerOfGame();
-//                Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
-
             selectAndCompareAndDisplayResultsOfCardRound();
-
         });
     }
 
@@ -134,16 +130,6 @@ public class MainActivity extends AppCompatActivity {
         removeCardBackGrounds();
     }
 
-    public void declareWinnerOfGame() {
-        if (totalPlayerScore > totalOpponentScore) {
-            playerNumber.setText("\u2713");
-            opponentNumber.setText("X");
-        } else {
-            playerNumber.setText("X");
-            opponentNumber.setText("\u2713");
-        }
-    }
-
     public void setGameScore(int winner) {
         if (winner==PLAYER_CARD_WINS) {
             totalPlayerScore++;
@@ -155,6 +141,20 @@ public class MainActivity extends AppCompatActivity {
         }
         totalCardsLeft -= 2;
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
+
+        if (totalCardsLeft==0) {
+            declareWinnerOfGame();
+        }
+    }
+
+    public void declareWinnerOfGame() {
+        if (totalPlayerScore > totalOpponentScore) {
+            playerNumber.setText("\u2713");
+            opponentNumber.setText("X");
+        } else {
+            playerNumber.setText("X");
+            opponentNumber.setText("\u2713");
+        }
     }
 
     public void setCardRoundResultText(int winner) {
