@@ -99,6 +99,18 @@
     </TextView>
 
     <TextView
+        android:id="@+id/draw_round_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/playerCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="6dp"
+        android:textSize="24sp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <TextView
         android:id="@+id/player_score_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -118,21 +130,25 @@
         app:layout_constraintEnd_toEndOf="@id/opponentCard"
         app:layout_constraintBottom_toTopOf="@id/opponentCard"
         android:layout_marginBottom="6dp"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="@color/white">
     </TextView>
 
-    <TextView
-        android:id="@+id/draw_round_text"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reset_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/playerCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="6dp"
-        android:textSize="24sp"
-        android:textColor="@color/white">
-    </TextView>
+        app:layout_constraintStart_toEndOf="@id/player_score_text"
+        app:layout_constraintEnd_toStartOf="@id/opponent_win_round_text"
+        app:layout_constraintBottom_toTopOf="@id/playerCard"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
+        app:cornerRadius="5dp"
+        app:strokeColor="@color/white"
+        app:strokeWidth="2dp"
+        android:textSize="20sp">
+    </com.google.android.material.button.MaterialButton>
 
 
     <ImageView
