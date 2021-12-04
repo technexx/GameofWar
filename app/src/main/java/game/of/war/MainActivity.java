@@ -96,22 +96,17 @@ public class MainActivity extends AppCompatActivity {
         //Todo: 27 total game score instead of 26 (should be even less than 26 due to ties, at the moment).
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
-                Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
+                declareWinnerOfGame();
+//                Toast.makeText(getApplicationContext(), "Deck empty!", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             selectAndCompareAndDisplayResultsOfCardRound();
 
-            Log.i("testnum", "club array is " + arrayOfNumbersForClubs.size());
-            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades.size());
-            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds.size());
-            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts.size());
-
         });
     }
 
     public void selectAndCompareAndDisplayResultsOfCardRound() {
-
         ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
         while (chosenSuitArrayForPlayer.size()==0) {
             chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
@@ -137,6 +132,16 @@ public class MainActivity extends AppCompatActivity {
         setGameScore(drawResult);
 
         removeCardBackGrounds();
+    }
+
+    public void declareWinnerOfGame() {
+        if (totalPlayerScore > totalOpponentScore) {
+            playerNumber.setText("\u2713");
+            opponentNumber.setText("X");
+        } else {
+            playerNumber.setText("X");
+            opponentNumber.setText("\u2713");
+        }
     }
 
     public void setGameScore(int winner) {
@@ -276,9 +281,16 @@ public class MainActivity extends AppCompatActivity {
         playerCard.setBackgroundResource(R.drawable.card_logo);
         opponentCard.setBackgroundResource(R.drawable.card_logo);
     }
-}
 
-//            Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
-//            Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
-//            Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds);
-//            Log.i("testnum", "heart array is " + arrayOfNumbersForHearts);
+    public void logArrays() {
+        Log.i("testnum", "club array SIZE is " + arrayOfNumbersForClubs.size());
+        Log.i("testnum", "spade array SIZE is " + arrayOfNumbersForSpades.size());
+        Log.i("testnum", "diamond array SIZE is " + arrayOfNumbersForDiamonds.size());
+        Log.i("testnum", "heart array SIZE is " + arrayOfNumbersForHearts.size());
+
+        Log.i("testnum", "club array is " + arrayOfNumbersForClubs);
+        Log.i("testnum", "spade array is " + arrayOfNumbersForSpades);
+        Log.i("testnum", "diamond array is " + arrayOfNumbersForDiamonds);
+        Log.i("testnum", "heart array is " + arrayOfNumbersForHearts);
+    }
+}
