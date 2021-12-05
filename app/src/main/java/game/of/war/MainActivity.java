@@ -111,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         populateSuitArrays();
 
         crossedSwords.setOnClickListener(v-> {
-            logArrays();
             if (selectArrayOfNumbersFromSuit()==null) {
                 return;
             }
@@ -147,9 +146,19 @@ public class MainActivity extends AppCompatActivity {
 
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
         setCardRoundResultText(drawResult);
-        setGameScore(drawResult);
 
+        if (drawResult==CARDS_DRAW) {
+            HEREWEGOITSWARAGAIN();
+            return;
+        }
+
+        setGameScore(drawResult);
         removeCardBackGrounds();
+    }
+
+    public void HEREWEGOITSWARAGAIN() {
+        crossedSwords.setBackgroundResource(R.drawable.shotguns);
+
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
@@ -239,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             playerPointDeclarationTextView.setText("");
             opponentPointDeclarationTextView.setText("");
-            drawRoundText.setText("DRAW!");
+            drawRoundText.setText("WAR!!!");
         }
     }
 
