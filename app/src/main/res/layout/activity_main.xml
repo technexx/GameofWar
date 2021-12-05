@@ -29,6 +29,75 @@
         android:textColor="@color/white">
     </TextView>
 
+    <TextView
+        android:id="@+id/total_cards_textView_header"
+        android:text="Cards Left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/total_cards_left_textView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:layout_marginBottom="4dp">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/player_games_won_textView"
+        android:text="Won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/crossed_swords"
+        app:layout_constraintBottom_toBottomOf="@id/crossed_swords"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:textSize="13sp">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/opponent_games_won_textView"
+        android:text="Won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/crossed_swords"
+        app:layout_constraintBottom_toBottomOf="@id/crossed_swords"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/white"
+        android:textSize="13sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/player_games_won"
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/player_games_won_textView"
+        app:layout_constraintStart_toStartOf="@id/playerCard"
+        app:layout_constraintEnd_toEndOf="@id/playerCard"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/white"
+        android:textSize="16sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/opponent_games_won"
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/opponent_games_won_textView"
+        app:layout_constraintStart_toStartOf="@id/opponentCard"
+        app:layout_constraintEnd_toEndOf="@id/opponentCard"
+        android:layout_marginTop="3dp"
+        android:textColor="@color/white"
+        android:textSize="16sp">
+    </TextView>
+
     <View
         android:id="@+id/playerCard"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,7 +120,7 @@
 
 
     <TextView
-        android:id="@+id/playerNumber"
+        android:id="@+id/playerCardNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/playerCard"
@@ -63,7 +132,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/opponentNumber"
+        android:id="@+id/opponentCardNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/opponentCard"
@@ -138,8 +207,8 @@
         android:id="@+id/reset_game"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/player_score_text"
-        app:layout_constraintEnd_toStartOf="@id/opponent_win_round_text"
+        app:layout_constraintStart_toEndOf="@id/playerCard"
+        app:layout_constraintEnd_toStartOf="@id/opponentCard"
         app:layout_constraintBottom_toTopOf="@id/playerCard"
         android:layout_marginBottom="6dp"
         android:textColor="@color/white"

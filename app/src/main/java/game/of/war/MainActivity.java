@@ -28,12 +28,18 @@ public class MainActivity extends AppCompatActivity {
     View opponentCard;
     Button resetGame;
 
-    TextView playerNumber;
-    TextView playerScoreText;
-    TextView playerWinText;
-    TextView opponentNumber;
-    TextView opponentScoreText;
-    TextView opponentWinText;
+    TextView playerCardNumber;
+    TextView playerPointDeclarationTextView;
+
+    TextView playerGamesWonHeader;
+    TextView playerGamesWonTextView;
+
+    TextView opponentCardNumber;
+    TextView opponentPointDeclarationTextView;
+
+    TextView opponentGamesWonHeader;
+    TextView opponentGamesWonTextView;
+
     TextView drawRoundText;
 
     ImageView playerTopLeftSuit;
@@ -63,8 +69,11 @@ public class MainActivity extends AppCompatActivity {
     int totalCardsLeft = 52;
     int totalPlayerScore;
     int totalOpponentScore;
+    int numberOfplayerGamesWonTextView;
+    int numberOfopponentGamesWonTextView;
     boolean gameHasBegun;
 
+    //Todo: Game win count.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,18 +88,20 @@ public class MainActivity extends AppCompatActivity {
         resetGame.setVisibility(View.INVISIBLE);
 
         playerCard = findViewById(R.id.playerCard);
-        playerNumber = findViewById(R.id.playerNumber);
-        playerScoreText = findViewById(R.id.player_score_text);
-        playerWinText = findViewById(R.id.player_win_round_text);
+        playerCardNumber = findViewById(R.id.playerCardNumber);
+        playerGamesWonHeader = findViewById(R.id.player_score_text);
+        playerPointDeclarationTextView = findViewById(R.id.player_win_round_text);
+        playerGamesWonTextView = findViewById(R.id.player_games_won);
         playerTopLeftSuit = findViewById(R.id.playerTopLeftSuit);
         playerTopRightSuit = findViewById(R.id.playerTopRightSuit);
         playerBottomLeftSuit = findViewById(R.id.playerBottomLeftSuit);
         playerBottomRightSuit = findViewById(R.id.playerBottomRightSuit);
 
-        opponentWinText = findViewById(R.id.opponent_win_round_text);
+        opponentPointDeclarationTextView = findViewById(R.id.opponent_win_round_text);
         opponentCard = findViewById(R.id.opponentCard);
-        opponentNumber = findViewById(R.id.opponentNumber);
-        opponentScoreText = findViewById(R.id.opponent_score_text);
+        opponentCardNumber = findViewById(R.id.opponentCardNumber);
+        opponentGamesWonHeader = findViewById(R.id.opponent_score_text);
+        opponentGamesWonTextView = findViewById(R.id.opponent_games_won);
         opponentTopLeftSuit = findViewById(R.id.opponentTopLeftSuit);
         opponentTopRightSuit = findViewById(R.id.opponentTopRightSuit);
         opponentBottomLeftSuit = findViewById(R.id.opponentBottomLeftSuit);
@@ -121,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
         int playerCardSelected = selectCardNumberFromArray(chosenSuitArrayForPlayer);
         displaySuitDrawableForPlayer(chosenSuitArrayForPlayer);
-        playerNumber.setText(convertCardValueToString(playerCardSelected));
+        playerCardNumber.setText(convertCardValueToString(playerCardSelected));
         removeCardFromDeck(chosenSuitArrayForPlayer, playerCardSelected);
 
         ArrayList<Integer> chosenSuitArrayForOpponent = selectArrayOfNumbersFromSuit();
@@ -131,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
 
         int opponentCardSelected = selectCardNumberFromArray(chosenSuitArrayForOpponent);
         displaySuitDrawableForOpponent(chosenSuitArrayForOpponent);
-        opponentNumber.setText(convertCardValueToString(opponentCardSelected));
+        opponentCardNumber.setText(convertCardValueToString(opponentCardSelected));
         removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
 
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
@@ -181,11 +192,11 @@ public class MainActivity extends AppCompatActivity {
     public void setGameScore(int winner) {
         if (winner==PLAYER_CARD_WINS) {
             totalPlayerScore++;
-            playerScoreText.setText(String.valueOf(totalPlayerScore));
+            playerGamesWonHeader.setText(String.valueOf(totalPlayerScore));
         }
         else if (winner==OPPONENT_CARD_WINS) {
             totalOpponentScore++;
-            opponentScoreText.setText(String.valueOf(totalOpponentScore));
+            opponentGamesWonHeader.setText(String.valueOf(totalOpponentScore));
         }
         totalCardsLeft -= 2;
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
@@ -198,26 +209,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void declareWinnerOfGame() {
         if (totalPlayerScore > totalOpponentScore) {
-            playerNumber.setText("\u2713");
-            opponentNumber.setText("X");
+            playerCardNumber.setText("\u2713");
+            opponentCardNumber.setText("X");
+            playerPointDeclarationTextView.setText("Winner!");
+            opponentPointDeclarationTextView.setText("Loser!");
+
+            numberOfplayerGamesWonTextView++;
+            playerGamesWonTextView.setText(String.valueOf(numberOfplayerGamesWonTextView));
         } else {
-            playerNumber.setText("X");
-            opponentNumber.setText("\u2713");
+            playerCardNumber.setText("X");
+            opponentCardNumber.setText("\u2713");
+            playerPointDeclarationTextView.setText("Loser!");
+            opponentPointDeclarationTextView.setText("Winner!");
+
+            numberOfopponentGamesWonTextView++;
+            opponentGamesWonTextView.setText(String.valueOf(numberOfopponentGamesWonTextView));
         }
     }
 
     public void setCardRoundResultText(int winner) {
         if (winner==PLAYER_CARD_WINS) {
-            playerWinText.setText("Win!");
-            opponentWinText.setText("");
+            playerPointDeclarationTextView.setText("Point!");
+            opponentPointDeclarationTextView.setText("");
             drawRoundText.setText("");
         } else if (winner==OPPONENT_CARD_WINS) {
-            playerWinText.setText("");
-            opponentWinText.setText("WIN!");
+            playerPointDeclarationTextView.setText("");
+            opponentPointDeclarationTextView.setText("Point!");
             drawRoundText.setText("");
         } else {
-            playerWinText.setText("");
-            opponentWinText.setText("");
+            playerPointDeclarationTextView.setText("");
+            opponentPointDeclarationTextView.setText("");
             drawRoundText.setText("DRAW!");
         }
     }
@@ -287,10 +308,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void resetGameViewsAndVars() {
         gameHasBegun = false;
-        playerScoreText.setText("0");
-        opponentScoreText.setText("0");
+
+        totalPlayerScore = 0;
+        totalOpponentScore = 0;
         totalCardsLeft = 52;
+
+        playerGamesWonHeader.setText("0");
+        opponentGamesWonHeader.setText("0");
         totalCardsLeftTextView.setText("52");
+
         playerCard.setBackgroundResource(R.drawable.card_logo);
         opponentCard.setBackgroundResource(R.drawable.card_logo);
         resetGame.setVisibility(View.INVISIBLE);
