@@ -157,12 +157,14 @@ public class MainActivity extends AppCompatActivity {
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
 
         if (itIsWar) {
-            if (warCount!=3) {
-                warCount++;
+            warCount++;
+            if (warCount <=4) {
                 setWarTextView(warCount);
-                return;
-            } else {
-                warCount = 0;
+                if (warCount<=3) {
+                    return;
+                } else {
+                    //Todo: War winner changes.
+                }
             }
         }
 
@@ -173,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         setCardRoundResultText(drawResult);
+        //Todo: This calls setWarTextAndImageViews() if in war, which removes warText textView.
         setGameScore(drawResult);
     }
 
@@ -184,10 +187,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void setWarTextView(int warCount) {
         switch (warCount) {
-            case 0: warText.setText("I"); break;
-            case 1: warText.setText("I de-"); break;
-            case 2: warText.setText("I de-clare"); break;
-            case 3: warText.setText("I de-clare WAR!"); break;
+            case 1: warText.setText("I"); break;
+            case 2: warText.setText("I de-"); break;
+            case 3: warText.setText("I de-clare"); break;
+            case 4: warText.setText("I de-clare WAR!"); break;
         }
     }
 
@@ -238,11 +241,14 @@ public class MainActivity extends AppCompatActivity {
             opponentGamesWonHeader.setText(String.valueOf(totalOpponentScore));
         }
         if (!itIsWar){
+            if (warText.getVisibility()==View.VISIBLE) warText.setVisibility(View.INVISIBLE);
             totalCardsLeft -= 2;
         } else {
             totalCardsLeft -= 10;
             itIsWar = false;
+            warCount = 0;
             setWarTextAndImageViews(false);
+
         }
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
 
@@ -357,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
         if (!atWar) {
             playerPointDeclarationTextView.setVisibility(View.VISIBLE);
             opponentPointDeclarationTextView.setVisibility(View.VISIBLE);
-            warText.setVisibility(View.INVISIBLE);
+//            warText.setVisibility(View.INVISIBLE);
             crossedSwords.setBackgroundResource(R.drawable.crossed_swords);
 
             playerCardNumber.setBackgroundResource(0);
