@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     TextView opponentGamesWonTextView;
 
     TextView drawRoundText;
+    TextView warText;
 
     ImageView playerTopLeftSuit;
     ImageView playerTopRightSuit;
@@ -71,9 +72,11 @@ public class MainActivity extends AppCompatActivity {
     int totalOpponentScore;
     int numberOfplayerGamesWonTextView;
     int numberOfopponentGamesWonTextView;
-    boolean gameHasBegun;
 
-    //Todo: Game win count.
+    boolean gameHasBegun;
+    boolean itIsWar;
+    int warCount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         crossedSwords = findViewById(R.id.crossed_swords);
         drawRoundText = findViewById(R.id.draw_round_text);
         totalCardsLeftTextView = findViewById(R.id.total_cards_left_textView);
+        warText = findViewById(R.id.war_textView);
+        warText.setVisibility(View.INVISIBLE);
 
         resetGame = findViewById(R.id.reset_game);
         resetGame.setText("Reset");
@@ -124,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectAndCompareAndDisplayResultsOfCardRound() {
+        if (!gameHasBegun) {
+            removeCardBackGrounds();
+            gameHasBegun = true;
+        }
+
         ArrayList<Integer> chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
         while (chosenSuitArrayForPlayer.size()==0) {
             chosenSuitArrayForPlayer = selectArrayOfNumbersFromSuit();
@@ -145,20 +155,40 @@ public class MainActivity extends AppCompatActivity {
         removeCardFromDeck(chosenSuitArrayForOpponent, opponentCardSelected);
 
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
-        setCardRoundResultText(drawResult);
 
-        if (drawResult==CARDS_DRAW) {
+        if (itIsWar) {
+            if (warCount!=3) {
+                warCount++;
+                setWarTextView(warCount);
+                return;
+            } else {
+                warCount = 0;
+            }
+        }
+
+        if (drawResult==CARDS_DRAW && !itIsWar) {
+            itIsWar = true;
             HEREWEGOITSWARAGAIN();
             return;
         }
 
+        setCardRoundResultText(drawResult);
         setGameScore(drawResult);
-        removeCardBackGrounds();
     }
 
     public void HEREWEGOITSWARAGAIN() {
-        crossedSwords.setBackgroundResource(R.drawable.shotguns);
+//        removeCardBackGrounds();
+//        setCardBackGroundsToImageViews();
+        setWarTextAndImageViews(true);
+    }
 
+    public void setWarTextView(int warCount) {
+        switch (warCount) {
+            case 0: warText.setText("I"); break;
+            case 1: warText.setText("I de-"); break;
+            case 2: warText.setText("I de-clare"); break;
+            case 3: warText.setText("I de-clare WAR!"); break;
+        }
     }
 
     public ArrayList<Integer> selectArrayOfNumbersFromSuit() {
@@ -200,19 +230,41 @@ public class MainActivity extends AppCompatActivity {
 
     public void setGameScore(int winner) {
         if (winner==PLAYER_CARD_WINS) {
-            totalPlayerScore++;
+            if (!itIsWar) totalPlayerScore++; else totalPlayerScore +=5;
             playerGamesWonHeader.setText(String.valueOf(totalPlayerScore));
         }
         else if (winner==OPPONENT_CARD_WINS) {
-            totalOpponentScore++;
+            if (!itIsWar) totalOpponentScore++; else totalOpponentScore +=5;;
             opponentGamesWonHeader.setText(String.valueOf(totalOpponentScore));
         }
-        totalCardsLeft -= 2;
+        if (!itIsWar){
+            totalCardsLeft -= 2;
+        } else {
+            totalCardsLeft -= 10;
+            itIsWar = false;
+            setWarTextAndImageViews(false);
+        }
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
 
         if (totalCardsLeft==0) {
             declareWinnerOfGame();
             resetGame.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setCardRoundResultText(int winner) {
+        if (winner==PLAYER_CARD_WINS) {
+            playerPointDeclarationTextView.setText("Score!");
+            opponentPointDeclarationTextView.setText("");
+            drawRoundText.setText("");
+        } else if (winner==OPPONENT_CARD_WINS) {
+            playerPointDeclarationTextView.setText("");
+            opponentPointDeclarationTextView.setText("Score!");
+            drawRoundText.setText("");
+        } else {
+            playerPointDeclarationTextView.setText("");
+            opponentPointDeclarationTextView.setText("");
+            drawRoundText.setText("WAR!!!");
         }
     }
 
@@ -233,22 +285,6 @@ public class MainActivity extends AppCompatActivity {
 
             numberOfopponentGamesWonTextView++;
             opponentGamesWonTextView.setText(String.valueOf(numberOfopponentGamesWonTextView));
-        }
-    }
-
-    public void setCardRoundResultText(int winner) {
-        if (winner==PLAYER_CARD_WINS) {
-            playerPointDeclarationTextView.setText("Point!");
-            opponentPointDeclarationTextView.setText("");
-            drawRoundText.setText("");
-        } else if (winner==OPPONENT_CARD_WINS) {
-            playerPointDeclarationTextView.setText("");
-            opponentPointDeclarationTextView.setText("Point!");
-            drawRoundText.setText("");
-        } else {
-            playerPointDeclarationTextView.setText("");
-            opponentPointDeclarationTextView.setText("");
-            drawRoundText.setText("WAR!!!");
         }
     }
 
@@ -308,10 +344,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeCardBackGrounds() {
-        if (!gameHasBegun) {
-            playerCard.setBackgroundResource(R.drawable.card_border);
-            opponentCard.setBackgroundResource(R.drawable.card_border);
-            gameHasBegun = true;
+        playerCard.setBackgroundResource(R.drawable.card_border);
+        opponentCard.setBackgroundResource(R.drawable.card_border);
+    }
+
+    public void setCardBackGroundsToImageViews() {
+        playerCard.setBackgroundResource(R.drawable.card_logo);
+        opponentCard.setBackgroundResource(R.drawable.card_logo);
+    }
+
+    public void setWarTextAndImageViews(boolean atWar) {
+        if (!atWar) {
+            playerPointDeclarationTextView.setVisibility(View.VISIBLE);
+            opponentPointDeclarationTextView.setVisibility(View.VISIBLE);
+            warText.setVisibility(View.INVISIBLE);
+            crossedSwords.setBackgroundResource(R.drawable.crossed_swords);
+
+            playerCardNumber.setBackgroundResource(0);
+            opponentCardNumber.setBackgroundResource(0);
+        } else {
+            playerPointDeclarationTextView.setVisibility(View.INVISIBLE);
+            opponentPointDeclarationTextView.setVisibility(View.INVISIBLE);
+            warText.setVisibility(View.VISIBLE);
+            crossedSwords.setBackgroundResource(R.drawable.shotguns);
+            drawRoundText.setText("WAR!");
+
+            playerCardNumber.setBackgroundResource(R.drawable.blue_oval);
+            opponentCardNumber.setBackgroundResource(R.drawable.red_oval);
         }
     }
 
@@ -326,8 +385,7 @@ public class MainActivity extends AppCompatActivity {
         opponentGamesWonHeader.setText("0");
         totalCardsLeftTextView.setText("52");
 
-        playerCard.setBackgroundResource(R.drawable.card_logo);
-        opponentCard.setBackgroundResource(R.drawable.card_logo);
+        setCardBackGroundsToImageViews();
         resetGame.setVisibility(View.INVISIBLE);
     }
 

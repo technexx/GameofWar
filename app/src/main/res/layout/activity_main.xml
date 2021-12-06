@@ -128,6 +128,7 @@
         app:layout_constraintTop_toTopOf="@id/playerCard"
         app:layout_constraintBottom_toBottomOf="@id/playerCard"
         android:textColor="@color/white"
+        android:textAlignment="center"
         android:textSize="60sp">
     </TextView>
 
@@ -140,7 +141,20 @@
         app:layout_constraintTop_toTopOf="@id/opponentCard"
         app:layout_constraintBottom_toBottomOf="@id/opponentCard"
         android:textColor="@color/white"
+        android:textAlignment="center"
         android:textSize="60sp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/war_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crossed_swords"
+        app:layout_constraintBottom_toTopOf="@id/player_score_text"
+        android:textColor="@color/white"
+        android:textSize="20sp">
     </TextView>
 
     <TextView
