@@ -162,27 +162,26 @@ public class MainActivity extends AppCompatActivity {
                 setWarTextView(warCount);
                 if (warCount<=3) {
                     return;
-                } else {
-                    //Todo: War winner changes.
                 }
+            } else {
+                itIsWar = false;
+                warCount = 0;
+                setWarTextAndImageViews(false);
             }
         }
 
         if (drawResult==CARDS_DRAW && !itIsWar) {
             itIsWar = true;
-            HEREWEGOITSWARAGAIN();
+            setWarTextAndImageViews(true);
             return;
         }
 
         setCardRoundResultText(drawResult);
-        //Todo: This calls setWarTextAndImageViews() if in war, which removes warText textView.
         setGameScore(drawResult);
+        Log.i("testwar", "atWar is " + itIsWar);
     }
 
     public void HEREWEGOITSWARAGAIN() {
-//        removeCardBackGrounds();
-//        setCardBackGroundsToImageViews();
-        setWarTextAndImageViews(true);
     }
 
     public void setWarTextView(int warCount) {
@@ -245,9 +244,6 @@ public class MainActivity extends AppCompatActivity {
             totalCardsLeft -= 2;
         } else {
             totalCardsLeft -= 10;
-            itIsWar = false;
-            warCount = 0;
-            setWarTextAndImageViews(false);
 
         }
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
@@ -271,6 +267,27 @@ public class MainActivity extends AppCompatActivity {
             playerPointDeclarationTextView.setText("");
             opponentPointDeclarationTextView.setText("");
             drawRoundText.setText("WAR!!!");
+        }
+    }
+
+    public void setWarTextAndImageViews(boolean atWar) {
+        if (!atWar) {
+            playerPointDeclarationTextView.setVisibility(View.VISIBLE);
+            opponentPointDeclarationTextView.setVisibility(View.VISIBLE);
+//            warText.setVisibility(View.INVISIBLE);
+            crossedSwords.setBackgroundResource(R.drawable.crossed_swords);
+
+            playerCardNumber.setBackgroundResource(0);
+            opponentCardNumber.setBackgroundResource(0);
+        } else {
+            playerPointDeclarationTextView.setVisibility(View.INVISIBLE);
+            opponentPointDeclarationTextView.setVisibility(View.INVISIBLE);
+            warText.setVisibility(View.VISIBLE);
+            crossedSwords.setBackgroundResource(R.drawable.shotguns);
+            drawRoundText.setText("WAR!");
+
+            playerCardNumber.setBackgroundResource(R.drawable.blue_oval);
+            opponentCardNumber.setBackgroundResource(R.drawable.red_oval);
         }
     }
 
@@ -357,27 +374,6 @@ public class MainActivity extends AppCompatActivity {
     public void setCardBackGroundsToImageViews() {
         playerCard.setBackgroundResource(R.drawable.card_logo);
         opponentCard.setBackgroundResource(R.drawable.card_logo);
-    }
-
-    public void setWarTextAndImageViews(boolean atWar) {
-        if (!atWar) {
-            playerPointDeclarationTextView.setVisibility(View.VISIBLE);
-            opponentPointDeclarationTextView.setVisibility(View.VISIBLE);
-//            warText.setVisibility(View.INVISIBLE);
-            crossedSwords.setBackgroundResource(R.drawable.crossed_swords);
-
-            playerCardNumber.setBackgroundResource(0);
-            opponentCardNumber.setBackgroundResource(0);
-        } else {
-            playerPointDeclarationTextView.setVisibility(View.INVISIBLE);
-            opponentPointDeclarationTextView.setVisibility(View.INVISIBLE);
-            warText.setVisibility(View.VISIBLE);
-            crossedSwords.setBackgroundResource(R.drawable.shotguns);
-            drawRoundText.setText("WAR!");
-
-            playerCardNumber.setBackgroundResource(R.drawable.blue_oval);
-            opponentCardNumber.setBackgroundResource(R.drawable.red_oval);
-        }
     }
 
     public void resetGameViewsAndVars() {
