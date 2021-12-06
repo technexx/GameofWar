@@ -156,32 +156,32 @@ public class MainActivity extends AppCompatActivity {
 
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
 
-        if (itIsWar) {
-            warCount++;
-            if (warCount <=4) {
-                setWarTextView(warCount);
-                if (warCount<=3) {
-                    return;
-                }
-            } else {
-                itIsWar = false;
-                warCount = 0;
-                setWarTextAndImageViews(false);
-            }
-        }
-
         if (drawResult==CARDS_DRAW && !itIsWar) {
             itIsWar = true;
             setWarTextAndImageViews(true);
             return;
         }
 
+        if (itIsWar) {
+            HEREWEGOITSWARAGAIN();
+        }
         setCardRoundResultText(drawResult);
         setGameScore(drawResult);
         Log.i("testwar", "atWar is " + itIsWar);
     }
 
     public void HEREWEGOITSWARAGAIN() {
+        warCount++;
+        if (warCount <=4) {
+            setWarTextView(warCount);
+            if (warCount<=3) {
+                return;
+            }
+        } else {
+            itIsWar = false;
+            warCount = 0;
+            setWarTextAndImageViews(false);
+        }
     }
 
     public void setWarTextView(int warCount) {
@@ -274,7 +274,6 @@ public class MainActivity extends AppCompatActivity {
         if (!atWar) {
             playerPointDeclarationTextView.setVisibility(View.VISIBLE);
             opponentPointDeclarationTextView.setVisibility(View.VISIBLE);
-//            warText.setVisibility(View.INVISIBLE);
             crossedSwords.setBackgroundResource(R.drawable.crossed_swords);
 
             playerCardNumber.setBackgroundResource(0);
