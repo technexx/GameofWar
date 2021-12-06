@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         resetGameViewsAndVars();
         populateSuitArrays();
 
+        //Todo: Empty array (cards run out before war is over) returns w/ out reset option. Card #s are not updating during war, either.
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
                 return;
@@ -163,28 +164,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (itIsWar) {
-            HEREWEGOITSWARAGAIN();
+            HEREWEGOITSWARAGAIN(drawResult);
+        } else {
+            setCardRoundResultText(drawResult);
+            setGameScore(drawResult);
+            setWarTextAndImageViews(false);
+            if (warText.getVisibility()==View.VISIBLE) warText.setVisibility(View.INVISIBLE);
         }
-        setCardRoundResultText(drawResult);
-        setGameScore(drawResult);
-        Log.i("testwar", "atWar is " + itIsWar);
+
+        countDownCardsInDeck();
     }
 
-    public void HEREWEGOITSWARAGAIN() {
+    public void HEREWEGOITSWARAGAIN(int drawResult) {
         warCount++;
-        if (warCount <=4) {
-            setWarTextView(warCount);
-            if (warCount<=3) {
-                return;
+        setWarDeclarationTextView(warCount);
+
+        if (warCount==4) {
+            warCount = 0;
+            if (drawResult!=CARDS_DRAW) {
+                itIsWar = false;
+                setCardRoundResultText(drawResult);
+                setGameScore(drawResult);
+            } else {
+                drawRoundText.setText(R.string.war_again);
             }
         } else {
-            itIsWar = false;
-            warCount = 0;
-            setWarTextAndImageViews(false);
         }
     }
 
-    public void setWarTextView(int warCount) {
+    public void setWarDeclarationTextView(int warCount) {
         switch (warCount) {
             case 1: warText.setText("I"); break;
             case 2: warText.setText("I de-"); break;
@@ -239,13 +247,10 @@ public class MainActivity extends AppCompatActivity {
             if (!itIsWar) totalOpponentScore++; else totalOpponentScore +=5;;
             opponentGamesWonHeader.setText(String.valueOf(totalOpponentScore));
         }
-        if (!itIsWar){
-            if (warText.getVisibility()==View.VISIBLE) warText.setVisibility(View.INVISIBLE);
-            totalCardsLeft -= 2;
-        } else {
-            totalCardsLeft -= 10;
+    }
 
-        }
+    public void countDownCardsInDeck() {
+        totalCardsLeft -= 2;
         totalCardsLeftTextView.setText(String.valueOf(totalCardsLeft));
 
         if (totalCardsLeft==0) {

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Game of War</string>
+    <string name="war_again">Oh no, it\'s war AGAIN!</string>
 </resources>
