@@ -116,10 +116,6 @@ public class MainActivity extends AppCompatActivity {
         resetGameViewsAndVars();
         populateSuitArrays();
 
-//        testScore();
-
-        //Todo: Tie game check marks player.
-        //Todo: War gun background is displayed on top of swords.
         crossedSwords.setOnClickListener(v-> {
             if (selectArrayOfNumbersFromSuit()==null) {
                 return;
@@ -161,8 +157,6 @@ public class MainActivity extends AppCompatActivity {
 
         int drawResult = flipResult(playerCardSelected, opponentCardSelected);
 
-        countDownCardsInDeck();
-
         if (drawResult==CARDS_DRAW && !itIsWar) {
             itIsWar = true;
             setWarTextAndImageViews(true);
@@ -176,6 +170,8 @@ public class MainActivity extends AppCompatActivity {
             setGameScore(drawResult);
             if (warText.getVisibility()==View.VISIBLE) warText.setVisibility(View.INVISIBLE);
         }
+
+        countDownCardsInDeck();
     }
 
     public void HEREWEGOITSWARAGAIN(int drawResult) {
@@ -209,15 +205,12 @@ public class MainActivity extends AppCompatActivity {
     public void setWarCountForLowDeck() {
         if (totalCardsLeft==2) {
             warCount = 3;
-            Log.i("testWar", "true at 2 cards!");
         }
         if (totalCardsLeft==4) {
             warCount = 2;
-            Log.i("testWar", "true at 4 cards!");
         }
         if (totalCardsLeft==6) {
             warCount = 1;
-            Log.i("testWar", "true at 6 cards!");
         }
     }
 
@@ -428,13 +421,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void testScore() {
         playerCard.setOnClickListener(v-> {
-            countDownCardsInDeck();
             setGameScore(PLAYER_CARD_WINS);
+            countDownCardsInDeck();
         });
 
         opponentCard.setOnClickListener(v-> {
-            countDownCardsInDeck();
             setGameScore(OPPONENT_CARD_WINS);
+            countDownCardsInDeck();
         });
     }
 
